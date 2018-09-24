@@ -205,18 +205,18 @@ module Sablon
 
       def width
         if @attributes["properties"]
-          width_with_unit_array = @attributes["properties"][:width].split(/(\d+)/)
-          unconverted_width = width_with_unit_array[1].to_i
-          unit = width_with_unit_array[2]
+          width_with_unit = @attributes["properties"][:width]
+          unconverted_width = width_with_unit.to_f
+          unit = width_with_unit.gsub(unconverted_width.to_s, "").strip
           convert_to_emu(unit, unconverted_width)
         end
       end
 
       def height
         if @attributes["properties"]
-          height_with_unit_array = @attributes["properties"][:height].split(/(\d+)/)
-          unconverted_height = height_with_unit_array[1].to_i
-          unit = height_with_unit_array[2]
+          height_with_unit = @attributes["properties"][:height]
+          unconverted_height = height_with_unit.to_f
+          unit = height_with_unit.gsub(unconverted_height.to_s, "").strip
           convert_to_emu(unit, unconverted_height)
         end
       end
@@ -247,9 +247,9 @@ module Sablon
       # Convert centimeters or inches to Word specific emu format
       def convert_to_emu(unit, value)
         if unit == "cm"
-          value * 360000
+          (value * 360000).to_i
         elsif unit == "in"
-          value * 914400
+          (value * 914400).to_i
         end
       end
     end
